@@ -113,7 +113,6 @@ In your `MainActivity` or `Application` class:
 | `getAllDevicesFromOrganization` | Retrieves all devices across an organization   | [Organization Devices](https://eu.manage.ovcirrus.com/apidoc/apidoc.html#tag/Device/paths/~1ov~1v1~1organizations~1%7BorgId%7D~1sites~1devices/get)        |
 
 ---
-Test
 
 ## 📦 Releases
 
