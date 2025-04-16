@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: ovcirrusapi
+Version: 10.4.3
+Summary: OmniVista Cirrus RestFul API library for Python
+Author-email: Samuel Yip <kahyean.yip@gmail.com>
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: httpx>=0.24.1
+Requires-Dist: requests>=2.31.0
+Requires-Dist: pydantic>=2.0
+Requires-Dist: pybreaker>=0.7.0
+Requires-Dist: backoff>=2.2.1
