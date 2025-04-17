@@ -24,15 +24,15 @@ The full API documentation is available at: [OmniVista Cirrus API Docs](https://
 
 - Authentication API
 - User API
-- Device API
 - Organization API
-- Site API
 
 ---
 
 ## 🛠️ Built With
 
 - **python 3.8**
+
+```python
     dependencies = [
         "httpx>=0.24.1",
         "requests>=2.31.0",
@@ -40,20 +40,12 @@ The full API documentation is available at: [OmniVista Cirrus API Docs](https://
         "pybreaker>=0.7.0",
         "backoff>=2.2.1"
     ]
-
----
+```
 
 ## 🚀 Installation
 
 
-To install manually:
-
-1. Download the `ovcirrusapi-x.x.x.aar` file and place it in the `libs/` folder of your project.
-2. Add the following to your `build.gradle.kts`:
-   ```kotlin
-   implementation(files("libs/ovcirrusapi-x.x.x.aar"))
-   ```
-3. Sync your Gradle files.
+1. pip install ovcirrusapi
 
 ---
 
@@ -61,8 +53,6 @@ To install manually:
 
 ### Step 1: Create a global instance
 
-
-In your `MainActivity` or `Application` class:
 
 ```python
     # auth_instance.py
@@ -76,14 +66,14 @@ In your `MainActivity` or `Application` class:
     )
 ```
 
-### Step 2: Import the instance and 
+### Step 2: Import the instance and use the apiClient in the .py file
 
 ```python
 
     from auth_instance import auth
     
-    client = OVCirrusApiClient(base_url=API_BASE_URL, auth=auth)
-    userProfile = await client.getUserProfile()
+    apiClient = OVCirrusApiClient(base_url=API_BASE_URL, auth=auth)
+    userProfile = await apiClient.getUserProfile()
     if userProfile is None:
         print("Failed to retrieve profile.")
         return
@@ -91,39 +81,37 @@ In your `MainActivity` or `Application` class:
     print(userProfile.firstname)
 
 ```
-## 🧪 Try the Demo App
+## 🧪 Give it a try - example_usage.py
 
-1. Clone the repository to your local device.
-2. Open the project using Android Studio.
-3. Build and run the app on a physical device.
-4. Generate a **Text QR Code** with the following format:
-   ```json
-   {
-       "email": "<your_email>",
-       "password": "<your_password>",
-       "appId": "<your_app_id>",
-       "appSecret": "<your_app_secret>",
-       "apiBaseUrl": "<your_api_base_url>"
-   }
-   ```
-5. Scan the QR code with your device's camera.
-6. Tap the **Login** button to authenticate.
+1. Fill in the API credentials in the .env file
 
-   View the demo [here](https://www.youtube.com/shorts/Fq7wqiczGAw)
+```
+API_BASE_URL = "https://<base_url>/"
+AUTH_URL = API_BASE_URL + "api/ov/v1/applications/authenticate"
 
+EMAIL = "<email>"
+PASSWORD = "<password>"
+APP_ID = "<appId>"
+APP_SECRET = "<appSecret>"
+```
+
+2. Run the script, python example_usage.py
 
 ---
 
 ## 📚 Available Methods
 
-| Method                        | Description                                      | Documentation Link                                                                                                                                      |
-|------------------------------|--------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `authenticate`               | Authenticates and retrieves a token              | [Authentication API](https://docs.ovcirrus.com/ov/authentication-api)                                                                                   |
-| `getUserProfile`             | Retrieves the user profile                       | [User Profile - GET](https://eu.manage.ovcirrus.com/apidoc/apidoc.html#tag/User/paths/~1ov~1v1~1user~1profile/get)                                      |
-| `updateUserProfile`          | Updates the user profile                         | [User Profile - PUT](https://eu.manage.ovcirrus.com/apidoc/apidoc.html#tag/User/paths/~1ov~1v1~1user~1profile/put)                                      |
-| `createADevice`              | Creates a device under a site                    | [Create Device](https://eu.manage.ovcirrus.com/apidoc/apidoc.html#tag/Device/paths/~1ov~1v1~1organizations~1%7BorgId%7D~1sites~1%7BsiteId%7D~1devices/post) |
-| `getAllDevices`              | Gets all devices within a specific site          | [Site Devices](https://eu.manage.ovcirrus.com/apidoc/apidoc.html#tag/Device/paths/~1ov~1v1~1organizations~1%7BorgId%7D~1sites~1%7BsiteId%7D~1devices/get) |
-| `getAllDevicesFromOrganization` | Retrieves all devices across an organization   | [Organization Devices](https://eu.manage.ovcirrus.com/apidoc/apidoc.html#tag/Device/paths/~1ov~1v1~1organizations~1%7BorgId%7D~1sites~1devices/get)        |
+User API:
+- getUserProfile
+- UpdateUserProfile
+
+Organization API:
+- createAnOrganization
+- getAllUserOrganizations
+- getOrganizationBasicSettings
+- getOrganization
+- updateOrganization
+- deleteOrganization
 
 ---
 
@@ -131,9 +119,9 @@ In your `MainActivity` or `Application` class:
 
 | Version          | Date       | Notes           |
 |------------------|------------|-----------------|
-| v10.4.3 Build 03 | 2025-04-16 | Initial release |
+| v10.4.3          | 2025-04-16 | Initial release |
 
-Visit the [Releases](https://github.com/Samuelyip74/OVCirrusApiBuilder/releases/tag/10.4.3) page to download `.zip` packages.
+Visit the [Releases](https://github.com/Samuelyip74/OVCirrusApiPython/releases/tag/10.4.3) page to download `.zip` packages.
 
 ---
 
