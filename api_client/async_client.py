@@ -1,7 +1,7 @@
 # === api_client/async_client.py ===
 
 import logging
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, List, Any
 
 import httpx
 import backoff
@@ -98,7 +98,7 @@ class AsyncAPIClient:
         endpoint = "api/ov/v1/organizations"
         rawResponse = await self.get(endpoint)
         if rawResponse:
-            return ApiResponse[Organization].model_validate(rawResponse)
+            return ApiResponse[List[Organization]   ].model_validate(rawResponse)
         return rawResponse           
         
     async def close(self):
