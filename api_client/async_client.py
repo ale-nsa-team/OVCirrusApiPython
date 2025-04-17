@@ -100,6 +100,20 @@ class AsyncAPIClient:
         if rawResponse:
             return ApiResponse[List[Organization]   ].model_validate(rawResponse)
         return rawResponse           
+
+    async def getOrganizationBasicSettings(self, orgId: str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/settings/basic"
+        rawResponse = await self.get(endpoint)
+        if rawResponse:
+            return ApiResponse[Organization].model_validate(rawResponse)
+        return rawResponse          
+
+    async def getOrganization(self, orgId: str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId
+        rawResponse = await self.get(endpoint)
+        if rawResponse:
+            return ApiResponse[Organization].model_validate(rawResponse)
+        return rawResponse         
         
     async def close(self):
         await self.client.aclose()
