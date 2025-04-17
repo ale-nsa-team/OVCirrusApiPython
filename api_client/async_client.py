@@ -121,10 +121,17 @@ class OVCirrusApiClient:
 
     async def updateOrganization(self, orgId: str, organization: Organization) -> Optional[Any]:
         endpoint = "api/ov/v1/organizations/" + orgId
-        rawResponse = await self.put(endpoint, organization.model_dump())
+        rawResponse = await self.put(endpoint, organization)
         if rawResponse:
             return ApiResponse[Organization].model_validate(rawResponse)
-        return rawResponse            
+        return rawResponse      
+
+    async def deleteOrganization(self, orgId: str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId
+        rawResponse = await self.delete(endpoint)
+        if rawResponse:
+            return ApiResponse[orgId:str].model_validate(rawResponse)
+        return rawResponse                  
         
     async def close(self):
         await self.client.aclose()

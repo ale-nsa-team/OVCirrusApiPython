@@ -16,15 +16,15 @@ class DummyAuthenticator(Authenticator):
         return False
 
 # Sample payload for a valid organization
-valid_org = Organization(
-    id="123",
-    name="ALE",
-    enforceStrongPassword=True,
-    enforceStrongPasswordNotifyType="SHOW_MESSAGE_AFTER_LOGIN",
-    timezone="Europe/Tirane",
-    auditHour=130,
-    idleTimeout=3600
-)
+valid_org = {
+    "id":"123",
+    "name":"ALE",
+    "enforceStrongPassword":True,
+    "enforceStrongPasswordNotifyType":"SHOW_MESSAGE_AFTER_LOGIN",
+    "timezone":"Europe/Tirane",
+    "auditHour":130,
+    "idleTimeout":3600
+}
 
 # Mock successful response
 mock_success_response = {
