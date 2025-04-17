@@ -130,7 +130,10 @@ class OVCirrusApiClient:
         endpoint = "api/ov/v1/organizations/" + orgId
         rawResponse = await self.delete(endpoint)
         if rawResponse:
-            return ApiResponse[orgId:str].model_validate(rawResponse)
+            try:
+                return ApiResponse[Any].model_validate(rawResponse)
+            except:
+                return None
         return rawResponse                  
         
     async def close(self):
