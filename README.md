@@ -20,6 +20,8 @@ The full API documentation is available at: [OmniVista Cirrus API Docs](https://
 ## 🛠️ Built With
 
 - **python 3.8**
+
+```python
     dependencies = [
         "httpx>=0.24.1",
         "requests>=2.31.0",
@@ -27,8 +29,7 @@ The full API documentation is available at: [OmniVista Cirrus API Docs](https://
         "pybreaker>=0.7.0",
         "backoff>=2.2.1"
     ]
-
----
+```
 
 ## 🚀 Installation
 

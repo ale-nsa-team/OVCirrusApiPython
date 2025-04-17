@@ -5,11 +5,10 @@ from typing import Optional, Dict, Any
 
 import httpx
 import backoff
-
 from .auth import Authenticator
-
 from models.generic import ApiResponse
 from models.user import UserProfile
+from models.organization import Organization
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -84,8 +83,23 @@ class AsyncAPIClient:
         # Convert model to dict instead of JSON string for use with httpx
         userProfileDict = userProfile.model_dump(mode="json")
         rawResponse = await self.put(endpoint, json=userProfileDict)
-        response = ApiResponse[UserProfile].model_validate(rawResponse)
-        return response
+        if rawResponse:
+            return ApiResponse[UserProfile].model_validate(rawResponse)
+        return rawResponse
+
+    async def createAnOrganization(self, organization: Organization) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations"
+        rawResponse = await self.post(endpoint, organization)
+        if rawResponse:
+            return ApiResponse[Organization].model_validate(rawResponse)
+        return rawResponse          
+
+    async def getAllUserOrganizations(self) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations"
+        rawResponse = await self.get(endpoint)
+        if rawResponse:
+            return ApiResponse[Organization].model_validate(rawResponse)
+        return rawResponse           
         
     async def close(self):
         await self.client.aclose()
