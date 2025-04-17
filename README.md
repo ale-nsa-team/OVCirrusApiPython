@@ -70,7 +70,7 @@ In your `MainActivity` or `Application` class:
 
     from auth_instance import auth
     
-    client = AsyncAPIClient(base_url=API_BASE_URL, auth=auth)
+    client = OVCirrusApiClient(base_url=API_BASE_URL, auth=auth)
     userProfile = await client.getUserProfile()
     if userProfile is None:
         print("Failed to retrieve profile.")

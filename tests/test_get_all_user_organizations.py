@@ -1,7 +1,7 @@
 import pytest
 import httpx
 from httpx import Response, Request
-from api_client.async_client import AsyncAPIClient
+from api_client.async_client import OVCirrusApiClient
 from models.organization import Organization
 from models.generic import ApiResponse
 from api_client.auth import Authenticator
@@ -53,7 +53,7 @@ async def test_get_all_user_organizations():
     transport = httpx.MockTransport(mock_send)
 
     # Inject httpx.AsyncClient with mock transport
-    client = AsyncAPIClient(
+    client = OVCirrusApiClient(
         base_url="https://api.example.com",
         auth=DummyAuthenticator()
     )

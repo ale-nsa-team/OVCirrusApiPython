@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import AsyncMock
-from api_client.async_client import AsyncAPIClient
+from api_client.async_client import OVCirrusApiClient
 from models.organization import Organization
 from models.generic import ApiResponse
 from datetime import datetime, timezone
@@ -46,7 +46,7 @@ async def test_create_an_organization():
     }
 
     # Create the client and mock `post`
-    client = AsyncAPIClient(base_url="http://mock.api", auth=AsyncMock())
+    client = OVCirrusApiClient(base_url="http://mock.api", auth=AsyncMock())
     client.post = AsyncMock(return_value=fake_response)
 
     # Call the method

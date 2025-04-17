@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-class AsyncAPIClient:
+class OVCirrusApiClient:
     def __init__(self, base_url: str, auth: Authenticator):
         self.base_url = base_url.rstrip("/")
         self.auth = auth

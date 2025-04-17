@@ -1,6 +1,6 @@
 import pytest
 from httpx import Response
-from api_client.async_client import AsyncAPIClient
+from api_client.async_client import OVCirrusApiClient
 from models.organization import Organization
 from models.generic import ApiResponse
 from api_client.auth import Authenticator
@@ -44,11 +44,11 @@ mock_no_response = None
 
 @pytest.mark.asyncio
 async def test_get_organization_basic_settings():
-    # Mock the 'get' method of AsyncAPIClient to return the mock valid response
+    # Mock the 'get' method of OVCirrusApiClient to return the mock valid response
     mock_get = AsyncMock(return_value=mock_org_settings_data)
 
-    # Create an instance of AsyncAPIClient with the mock get method
-    client = AsyncAPIClient(
+    # Create an instance of OVCirrusApiClient with the mock get method
+    client = OVCirrusApiClient(
         base_url="https://api.example.com",
         auth=DummyAuthenticator()
     )
@@ -76,11 +76,11 @@ async def test_get_organization_basic_settings():
 
 @pytest.mark.asyncio
 async def test_get_organization_invalid_status():
-    # Mock the 'get' method of AsyncAPIClient to return the mock invalid response
+    # Mock the 'get' method of OVCirrusApiClient to return the mock invalid response
     mock_get = AsyncMock(return_value=mock_invalid_response)
 
-    # Create an instance of AsyncAPIClient with the mock get method
-    client = AsyncAPIClient(
+    # Create an instance of OVCirrusApiClient with the mock get method
+    client = OVCirrusApiClient(
         base_url="https://api.example.com",
         auth=DummyAuthenticator()
     )
@@ -104,11 +104,11 @@ async def test_get_organization_invalid_status():
 
 @pytest.mark.asyncio
 async def test_get_organization_no_response():
-    # Mock the 'get' method of AsyncAPIClient to return None (no response)
+    # Mock the 'get' method of OVCirrusApiClient to return None (no response)
     mock_get = AsyncMock(return_value=mock_no_response)
 
-    # Create an instance of AsyncAPIClient with the mock get method
-    client = AsyncAPIClient(
+    # Create an instance of OVCirrusApiClient with the mock get method
+    client = OVCirrusApiClient(
         base_url="https://api.example.com",
         auth=DummyAuthenticator()
     )

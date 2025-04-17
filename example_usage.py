@@ -1,5 +1,5 @@
 import asyncio
-from api_client import AsyncAPIClient, Authenticator
+from api_client import OVCirrusApiClient, Authenticator
 
 # Configuration (replace with real values or load from .env)
 API_BASE_URL = "https://eu.manage.ovcirrus.com/"
@@ -21,7 +21,7 @@ async def main():
 
     print("Token: " + auth.get_token())
 
-    client = AsyncAPIClient(base_url=API_BASE_URL, auth=auth)
+    client = OVCirrusApiClient(base_url=API_BASE_URL, auth=auth)
     
 # Get current user profile
     current_profile_resp = await client.getUserProfile()

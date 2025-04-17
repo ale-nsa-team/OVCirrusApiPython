@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import AsyncMock
 import httpx
 from httpx import Response, Request
-from api_client.async_client import AsyncAPIClient
+from api_client.async_client import OVCirrusApiClient
 from models.organization import Organization
 from models.generic import ApiResponse
 from api_client.auth import Authenticator
@@ -33,8 +33,8 @@ async def test_get_organization_valid_response():
         }
     }
 
-    # Create an instance of AsyncAPIClient (replace with actual class)
-    obj = AsyncAPIClient(
+    # Create an instance of OVCirrusApiClient (replace with actual class)
+    obj = OVCirrusApiClient(
         base_url="https://api.example.com",
         auth=DummyAuthenticator()
     )
@@ -56,7 +56,7 @@ async def test_get_organization_valid_response():
 @pytest.mark.asyncio
 async def test_get_organization_no_response():
     # Mocking the `get` method to return None
-    obj = AsyncAPIClient(
+    obj = OVCirrusApiClient(
         base_url="https://api.example.com",
         auth=DummyAuthenticator()
     )
@@ -78,8 +78,8 @@ async def test_get_organization_invalid_status():
         "data": {}
     }
 
-    # Create an instance of AsyncAPIClient
-    obj = AsyncAPIClient(
+    # Create an instance of OVCirrusApiClient
+    obj = OVCirrusApiClient(
         base_url="https://api.example.com",
         auth=DummyAuthenticator()
     )
