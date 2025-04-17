@@ -56,9 +56,13 @@ class OVCirrusApiClient:
                 return response.json()
             return None
 
-        except httpx.RequestError as e:
-            logger.exception(f"Async request to {url} failed.")
-            return None
+        except httpx.HTTPStatusError as e:
+            logger.warning(f"HTTP error {e.response.status_code}: {e.response.text}")
+            return e.response.json()
+        except Exception as e:
+            logger.exception(f"Unhandled exception during API request: {e}")
+            raise
+
 
     async def get(self, endpoint: str, params: Optional[Dict[str, Any]] = None) -> Optional[Any]:
         return await self._request("GET", endpoint, params=params)
@@ -113,7 +117,14 @@ class OVCirrusApiClient:
         rawResponse = await self.get(endpoint)
         if rawResponse:
             return ApiResponse[Organization].model_validate(rawResponse)
-        return rawResponse         
+        return rawResponse        
+
+    async def updateOrganization(self, orgId: str, organization: Organization) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId
+        rawResponse = await self.put(endpoint, organization.model_dump())
+        if rawResponse:
+            return ApiResponse[Organization].model_validate(rawResponse)
+        return rawResponse            
         
     async def close(self):
         await self.client.aclose()
