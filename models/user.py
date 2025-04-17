@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, Extra
+from pydantic import BaseModel, Field, Extra,ConfigDict
 from typing import Optional
 from datetime import datetime
 
@@ -30,6 +30,5 @@ class UserProfile(BaseModel):
     accessLevelRole: Optional[str] = None
     # msp: Optional[str] = None
 
-    class Config:
-        extra = "forbid"  # This will reject unexpected fields
+    model_config = ConfigDict(extra="forbid")
 

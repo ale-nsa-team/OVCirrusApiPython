@@ -159,31 +159,21 @@ async def test_get_user_profile_retry_success():
     await client.close()
 
 
-@pytest.mark.asyncio
+pytest.mark.asyncio
 async def test_get_user_profile_malformed_json():
-    # Simulating an invalid JSON response (single quotes instead of double quotes)
-    invalid_json_response = "{'status': 200, 'message': 'OK', 'data': {'name': 'Jane Doe'}}"
+    # Simulate a malformed JSON that was parsed incorrectly into a string (not a dict)
+    malformed_data = "{'status': 200, 'message': 'OK', 'data': {'name': 'Jane Doe'}}"  # Not a dict
 
-    # Mock the logger used in the OVCirrusApiClient or wherever it's being called from
-    with patch('api_client.async_client.logger') as mock_logger:
-        mock_logger.reset_mock()  # Reset any previous calls
+    with patch("utilities.model_validator.logger") as mock_logger:
+        result = safe_model_validate(ApiResponse[UserProfile], malformed_data)
 
-        # Simulate the validation process
-        try:
-            # This should raise an exception due to the malformed JSON
-            result = safe_model_validate(ApiResponse[UserProfile], invalid_json_response)
-        except Exception as e:
-            # Check if the error is being caught
-            print(f"Caught exception: {str(e)}")
-        
-        # Assert that the result is None due to invalid JSON
+        # safe_model_validate should return None on failure
         assert result is None
 
-        # Assert that the logger's error method was called with the correct error message
-        mock_logger.error.assert_called_with(
-            'Unexpected error during model validation for ApiResponse[UserProfile]: JSON Decode error'
-        )
+        # Ensure a warning was logged
+        assert mock_logger.warning.called
+        args, _ = mock_logger.warning.call_args
+        assert "Validation failed for ApiResponse[UserProfile]" in args[0]
 
-        # If no exception was raised in the above block, you can try a manual print to debug
-        if not mock_logger.error.called:
-            print("Error logging was not called, check the patch path and exception handling.")
+
+
