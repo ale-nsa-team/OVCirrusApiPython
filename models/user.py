@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, Extra
 from typing import Optional
 from datetime import datetime
 
@@ -29,4 +29,7 @@ class UserProfile(BaseModel):
     enforcementPolicy: Optional[str] = None
     accessLevelRole: Optional[str] = None
     # msp: Optional[str] = None
+
+    class Config:
+        extra = "forbid"  # This will reject unexpected fields
 

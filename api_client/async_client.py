@@ -9,6 +9,7 @@ from .auth import Authenticator
 from models.generic import ApiResponse
 from models.user import UserProfile
 from models.organization import Organization
+from utilities.model_validator import safe_model_validate
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -30,8 +31,9 @@ class OVCirrusApiClient:
     @backoff.on_exception(
         backoff.expo,
         (httpx.ConnectError, httpx.ReadTimeout, httpx.RemoteProtocolError),
-        max_tries=3
+        max_tries=2
     )
+
     async def _request(self, method: str, endpoint: str, **kwargs) -> Optional[Any]:
         url = f"{self.base_url}/{endpoint.lstrip('/')}"
         headers = self._get_headers()
@@ -40,6 +42,7 @@ class OVCirrusApiClient:
         try:
             response = await self.client.request(method, url, **kwargs)
 
+            # Handle 401 Unauthorized and attempt re-authentication
             if response.status_code == 401:
                 logger.warning("Received 401. Attempting re-authentication...")
                 if self.auth.force_relogin():
@@ -47,8 +50,8 @@ class OVCirrusApiClient:
                     kwargs["headers"] = headers
                     response = await self.client.request(method, url, **kwargs)
                 else:
-                    logger.error("Re-authentication failed.")
-                    return None
+                    logger.error("Re-authentication failed. Exiting.")
+                    return None  # Return None after max retries or failure
 
             response.raise_for_status()
 
@@ -58,10 +61,11 @@ class OVCirrusApiClient:
 
         except httpx.HTTPStatusError as e:
             logger.warning(f"HTTP error {e.response.status_code}: {e.response.text}")
-            return e.response.json()
+            return e.response.json()  # Return error details to be handled by the caller
         except Exception as e:
             logger.exception(f"Unhandled exception during API request: {e}")
-            raise
+            raise  # Reraise exception if it's unexpected
+
 
 
     async def get(self, endpoint: str, params: Optional[Dict[str, Any]] = None) -> Optional[Any]:
@@ -79,8 +83,7 @@ class OVCirrusApiClient:
     async def getUserProfile(self) -> Optional[Any]:
         endpoint = "api/ov/v1/user/profile"
         rawResponse = await self.get(endpoint)
-        response = ApiResponse[UserProfile].model_validate(rawResponse)
-        return response   
+        return safe_model_validate(ApiResponse[UserProfile], rawResponse)
 
     async def updateUserProfile(self, userProfile: UserProfile) -> Optional[Any]:
         endpoint = "api/ov/v1/user/profile"
