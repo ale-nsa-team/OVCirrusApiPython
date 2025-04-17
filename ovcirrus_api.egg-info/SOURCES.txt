@@ -9,11 +9,11 @@ models/auth.py
 models/generic.py
 models/organization.py
 models/user.py
-ovcirrusapi.egg-info/PKG-INFO
-ovcirrusapi.egg-info/SOURCES.txt
-ovcirrusapi.egg-info/dependency_links.txt
-ovcirrusapi.egg-info/requires.txt
-ovcirrusapi.egg-info/top_level.txt
+ovcirrus_api.egg-info/PKG-INFO
+ovcirrus_api.egg-info/SOURCES.txt
+ovcirrus_api.egg-info/dependency_links.txt
+ovcirrus_api.egg-info/requires.txt
+ovcirrus_api.egg-info/top_level.txt
 tests/test_1_1_get_user_profile.py
 tests/test_1_2_update_user_profile.py
 tests/test_2_1_create_an_organization.py
