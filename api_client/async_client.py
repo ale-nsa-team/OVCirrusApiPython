@@ -56,7 +56,11 @@ class OVCirrusApiClient:
             response.raise_for_status()
 
             if response.content:
-                return response.json()
+                try:
+                    return response.json()
+                except Exception as e:
+                    logger.warning(f"Failed to decode JSON from response: {e}")
+                    return None
             return None
 
         except httpx.HTTPStatusError as e:
@@ -88,8 +92,7 @@ class OVCirrusApiClient:
     async def updateUserProfile(self, userProfile: UserProfile) -> Optional[Any]:
         endpoint = "api/ov/v1/user/profile"
         # Convert model to dict instead of JSON string for use with httpx
-        userProfileDict = userProfile.model_dump(mode="json")
-        rawResponse = await self.put(endpoint, json=userProfileDict)
+        rawResponse = await self.put(endpoint, userProfile.model_dump(mode="json"))
         if rawResponse:
             return ApiResponse[UserProfile].model_validate(rawResponse)
         return rawResponse
@@ -124,7 +127,7 @@ class OVCirrusApiClient:
 
     async def updateOrganization(self, orgId: str, organization: Organization) -> Optional[Any]:
         endpoint = "api/ov/v1/organizations/" + orgId
-        rawResponse = await self.put(endpoint, organization)
+        rawResponse = await self.put(endpoint, organization.model_dump(mode="json"))
         if rawResponse:
             return ApiResponse[Organization].model_validate(rawResponse)
         return rawResponse      
