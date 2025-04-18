@@ -11,6 +11,8 @@ from models.user import UserProfile
 from models.organization import Organization
 from models.site import Site
 from models.device import Device, SaveToRunningResponse, RebootResponse
+from models.ssid import SSID, SSIDData, SSIDResponse
+
 
 
 from utilities.model_validator import safe_model_validate
@@ -87,6 +89,9 @@ class OVCirrusApiClient:
 
     async def delete(self, endpoint: str) -> Optional[Any]:
         return await self._request("DELETE", endpoint)
+
+    async def close(self):
+        await self.client.aclose()
 
     async def getUserProfile(self) -> Optional[Any]:
         endpoint = "api/ov/v1/user/profile"
@@ -278,7 +283,20 @@ class OVCirrusApiClient:
         rawResponse = await self.post(endpoint, postData)
         if rawResponse:
             return safe_model_validate(ApiResponse[RebootResponse], rawResponse)
-        return rawResponse                                              
+        return rawResponse    
+
+    async def getAllSsids(self, orgId:str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/wlan/ssids"
+        rawResponse = await self.get(endpoint)
+        if rawResponse: 
+            return safe_model_validate(SSIDResponse, rawResponse)
+        return rawResponse    
+
+    # TODO To correct SSIDData for createSSID, missing "configAssignment"
+    async def createSSID(self, orgId:str, siteId: str, ssidData:SSIDData) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/wlan/ssids"
+        rawResponse = await self.post(endpoint, ssidData)
+        if rawResponse:
+            return safe_model_validate(SSIDResponse, rawResponse)
+        return rawResponse                                                           
         
-    async def close(self):
-        await self.client.aclose()
