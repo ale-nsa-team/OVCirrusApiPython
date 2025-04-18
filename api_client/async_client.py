@@ -155,7 +155,38 @@ class OVCirrusApiClient:
         rawResponse = await self.get(endpoint)
         if rawResponse:
             return safe_model_validate(ApiResponse[List[Site]], rawResponse)
-        return rawResponse                       
+        return rawResponse       
+
+    async def getOrganizationSitesBuildingsFloors(self, orgId:str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/buildings/floors"
+        rawResponse = await self.get(endpoint)
+        if rawResponse:
+            return safe_model_validate(ApiResponse[List[Site]], rawResponse)
+        return rawResponse            
+
+    async def getSite(self, orgId:str, siteId:str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId"
+        rawResponse = await self.get(endpoint)
+        if rawResponse:
+            return safe_model_validate(ApiResponse[Site], rawResponse)
+        return rawResponse   
+
+    async def updateSite(self, orgId: str, siteId: str, site:Site) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId"
+        rawResponse = await self.put(endpoint, site.model_dump(mode="json"))
+        if rawResponse:
+            return safe_model_validate(ApiResponse[Site], rawResponse)
+        return rawResponse            
+
+    async def deleteSite(self, orgId: str, siteId: str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId"
+        rawResponse = await self.delete(endpoint)
+        if rawResponse:
+            try:
+                return ApiResponse[Any].model_validate(rawResponse)
+            except:
+                return None
+        return rawResponse                                  
         
     async def close(self):
         await self.client.aclose()

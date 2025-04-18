@@ -12,6 +12,7 @@ The full API documentation is available at: [OmniVista Cirrus API Docs](https://
 - Authentication API
 - User API
 - Organization API
+- Site API
 
 ---
 
@@ -100,6 +101,14 @@ Organization API:
 - updateOrganization
 - deleteOrganization
 
+Site API
+- createSite
+- getOrganizationSites
+- getOrganizationSitesBuildingsFloors
+- getSite
+- updateSite
+- deleteSite
+
 ---
 
 ## 📦 Releases
@@ -107,6 +116,7 @@ Organization API:
 | Version          | Date       | Notes           |
 |------------------|------------|-----------------|
 | v10.4.3post2     | 2025-04-16 | Initial release |
+| v10.4.3post3     | 2025-04-18 | Site API added  |
 
 Visit the [Releases](https://github.com/Samuelyip74/OVCirrusApiPython/releases/tag/10.4.3) page to download `.zip` packages.
 
