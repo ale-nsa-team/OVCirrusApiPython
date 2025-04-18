@@ -69,6 +69,8 @@ The full API documentation is available at: [OmniVista Cirrus API Docs](https://
 
     print(userProfile.firstname)
 
+    await apiClient.close()
+
 ```
 ## 🧪 Give it a try - example_usage.py
 
