@@ -66,8 +66,8 @@ The full API documentation is available at: [OmniVista Cirrus API Docs](https://
     if userProfile is None:
         print("Failed to retrieve profile.")
         return
-
-    print(userProfile.firstname)
+    else:
+        print(userProfile.firstname)
 
     await apiClient.close()
 
