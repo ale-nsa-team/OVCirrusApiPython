@@ -9,6 +9,8 @@ from .auth import Authenticator
 from models.generic import ApiResponse
 from models.user import UserProfile
 from models.organization import Organization
+from models.site import Site
+
 from utilities.model_validator import safe_model_validate
 
 logger = logging.getLogger(__name__)
@@ -91,45 +93,44 @@ class OVCirrusApiClient:
 
     async def updateUserProfile(self, userProfile: UserProfile) -> Optional[Any]:
         endpoint = "api/ov/v1/user/profile"
-        # Convert model to dict instead of JSON string for use with httpx
         rawResponse = await self.put(endpoint, userProfile.model_dump(mode="json"))
         if rawResponse:
-            return ApiResponse[UserProfile].model_validate(rawResponse)
+            return safe_model_validate(ApiResponse[UserProfile], rawResponse)
         return rawResponse
 
     async def createAnOrganization(self, organization: Organization) -> Optional[Any]:
         endpoint = "api/ov/v1/organizations"
         rawResponse = await self.post(endpoint, organization)
         if rawResponse:
-            return ApiResponse[Organization].model_validate(rawResponse)
+            return safe_model_validate(ApiResponse[Organization], rawResponse)
         return rawResponse          
 
     async def getAllUserOrganizations(self) -> Optional[Any]:
         endpoint = "api/ov/v1/organizations"
         rawResponse = await self.get(endpoint)
         if rawResponse:
-            return ApiResponse[List[Organization]   ].model_validate(rawResponse)
+            return safe_model_validate(ApiResponse[List[Organization]], rawResponse)
         return rawResponse           
 
     async def getOrganizationBasicSettings(self, orgId: str) -> Optional[Any]:
         endpoint = "api/ov/v1/organizations/" + orgId + "/settings/basic"
         rawResponse = await self.get(endpoint)
         if rawResponse:
-            return ApiResponse[Organization].model_validate(rawResponse)
+            return safe_model_validate(ApiResponse[Organization], rawResponse)
         return rawResponse          
 
     async def getOrganization(self, orgId: str) -> Optional[Any]:
         endpoint = "api/ov/v1/organizations/" + orgId
         rawResponse = await self.get(endpoint)
         if rawResponse:
-            return ApiResponse[Organization].model_validate(rawResponse)
+            return safe_model_validate(ApiResponse[Organization], rawResponse)
         return rawResponse        
 
     async def updateOrganization(self, orgId: str, organization: Organization) -> Optional[Any]:
         endpoint = "api/ov/v1/organizations/" + orgId
         rawResponse = await self.put(endpoint, organization.model_dump(mode="json"))
         if rawResponse:
-            return ApiResponse[Organization].model_validate(rawResponse)
+            return safe_model_validate(ApiResponse[Organization], rawResponse)
         return rawResponse      
 
     async def deleteOrganization(self, orgId: str) -> Optional[Any]:
@@ -140,6 +141,13 @@ class OVCirrusApiClient:
                 return ApiResponse[Any].model_validate(rawResponse)
             except:
                 return None
+        return rawResponse           
+
+    async def createSite(self, orgId:str, site: Site) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites"
+        rawResponse = await self.post(endpoint, site)
+        if rawResponse:
+            return safe_model_validate(ApiResponse[Site], rawResponse)
         return rawResponse                  
         
     async def close(self):
