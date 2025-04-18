@@ -1,7 +1,7 @@
 # === api_client/async_client.py ===
 
 import logging
-from typing import Optional, Dict, List, Any
+from typing import Optional, Dict, List, Any, Type
 
 import httpx
 import backoff
@@ -10,7 +10,7 @@ from models.generic import ApiResponse
 from models.user import UserProfile
 from models.organization import Organization
 from models.site import Site
-from models.device import Device
+from models.device import Device, SaveToRunningResponse, RebootResponse
 
 
 from utilities.model_validator import safe_model_validate
@@ -167,21 +167,21 @@ class OVCirrusApiClient:
         return rawResponse            
 
     async def getSite(self, orgId:str, siteId:str) -> Optional[Any]:
-        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" + siteId
         rawResponse = await self.get(endpoint)
         if rawResponse:
             return safe_model_validate(ApiResponse[Site], rawResponse)
         return rawResponse   
 
     async def updateSite(self, orgId: str, siteId: str, site:Site) -> Optional[Any]:
-        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" + siteId
         rawResponse = await self.put(endpoint, site.model_dump(mode="json"))
         if rawResponse:
             return safe_model_validate(ApiResponse[Site], rawResponse)
         return rawResponse            
 
     async def deleteSite(self, orgId: str, siteId: str) -> Optional[Any]:
-        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" + siteId
         rawResponse = await self.delete(endpoint)
         if rawResponse:
             try:
@@ -233,14 +233,14 @@ class OVCirrusApiClient:
         return rawResponse   
 
     async def updateDevice(self, orgId: str, siteId: str, deviceId:str, device:Device) -> Optional[Any]:
-        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId + "/devices/" + deviceId
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" + siteId + "/devices/" + deviceId
         rawResponse = await self.put(endpoint, device.model_dump(mode="json"))
         if rawResponse:
             return safe_model_validate(ApiResponse[Device], rawResponse)
         return rawResponse      
 
     async def deleteDevice(self, orgId: str, siteId: str, deviceId:str) -> Optional[Any]:
-        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId + "/devices/" + deviceId
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" + siteId + "/devices/" + deviceId
         rawResponse = await self.delete(endpoint)
         if rawResponse:
             try:
@@ -250,11 +250,35 @@ class OVCirrusApiClient:
         return rawResponse  
 
     async def updateRemoteAP(self, orgId: str, siteId: str, deviceId:str, device:Device) -> Optional[Any]:
-        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId + "/remote-aps/" + deviceId
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" + siteId + "/remote-aps/" + deviceId
         rawResponse = await self.put(endpoint, device.model_dump(mode="json"))
         if rawResponse:
             return safe_model_validate(ApiResponse[Device], rawResponse)
-        return rawResponse                                        
+        return rawResponse           
+
+    # TODO create tests cases
+    async def saveToRunning(self, orgId: str, devicesIds:List[str], macAddresses:List[str]) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/devices/savetorunning"
+        postData = {
+            "devicesIds" : devicesIds.model_dump(mode="json"),
+            "data"       : macAddresses.model_dump(mode="json")
+        }
+        rawResponse = await self.post(endpoint, postData)
+        if rawResponse:
+            return safe_model_validate(ApiResponse[SaveToRunningResponse], rawResponse)
+        return rawResponse         
+
+    # TODO create tests cases
+    async def reboot(self, orgId: str, macAddresses:List[str], workMode:str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/devices/savetorunning"
+        postData = {
+            "macAddresses"   : macAddresses.model_dump(mode="json"),
+            "workMode"       : workMode
+        }
+        rawResponse = await self.post(endpoint, postData)
+        if rawResponse:
+            return safe_model_validate(ApiResponse[RebootResponse], rawResponse)
+        return rawResponse                                              
         
     async def close(self):
         await self.client.aclose()
