@@ -3,7 +3,7 @@ from typing import Optional, List, Union
 from datetime import datetime
 
 
-class Label(BaseModel):
+class DeviceLabel(BaseModel):
     createdAt: Optional[datetime] = None
     updatedAt: Optional[datetime] = None
     id: Optional[str] = None
@@ -105,7 +105,7 @@ class UpgradeSchedule(BaseModel):
 
 
 class Device(BaseModel):
-    deviceLabels: Optional[List[Label]] = None
+    deviceLabels: Optional[List[DeviceLabel]] = None
     createdAt: Optional[datetime] = None
     updatedAt: Optional[datetime] = None
     id: Optional[str] = None
@@ -408,3 +408,10 @@ class DeviceData(BaseModel):
     desiredSwVersion: Optional[str]
     scheduleLevel: Optional[str]
     rootMacFriendlyName: Optional[str]    
+   
+class SaveToRunningResponse(BaseModel):
+    devicesIds: Optional[List[str]] = []
+    macAddresses: Optional[List[str]] = []
+
+class RebootResponse(BaseModel):
+    macAddresses: Optional[List[str]] = []    

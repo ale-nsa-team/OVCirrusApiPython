@@ -120,6 +120,8 @@ Device API
 - updateDevice
 - deleteDevice
 - updateRemoteAP
+- saveToRunning
+- reboot
 
 
 ---
