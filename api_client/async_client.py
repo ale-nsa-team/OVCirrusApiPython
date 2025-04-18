@@ -10,6 +10,8 @@ from models.generic import ApiResponse
 from models.user import UserProfile
 from models.organization import Organization
 from models.site import Site
+from models.device import Device
+
 
 from utilities.model_validator import safe_model_validate
 
@@ -165,28 +167,94 @@ class OVCirrusApiClient:
         return rawResponse            
 
     async def getSite(self, orgId:str, siteId:str) -> Optional[Any]:
-        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId"
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId
         rawResponse = await self.get(endpoint)
         if rawResponse:
             return safe_model_validate(ApiResponse[Site], rawResponse)
         return rawResponse   
 
     async def updateSite(self, orgId: str, siteId: str, site:Site) -> Optional[Any]:
-        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId"
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId
         rawResponse = await self.put(endpoint, site.model_dump(mode="json"))
         if rawResponse:
             return safe_model_validate(ApiResponse[Site], rawResponse)
         return rawResponse            
 
     async def deleteSite(self, orgId: str, siteId: str) -> Optional[Any]:
-        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId"
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId
         rawResponse = await self.delete(endpoint)
         if rawResponse:
             try:
                 return ApiResponse[Any].model_validate(rawResponse)
             except:
                 return None
-        return rawResponse                                  
+        return rawResponse 
+
+    async def createDevice(self, orgId:str, siteId: str, device:Device) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" + siteId + "/devices"
+        rawResponse = await self.post(endpoint, device)
+        if rawResponse:
+            return safe_model_validate(ApiResponse[Device], rawResponse)
+        return rawResponse      
+
+    async def getAllDevices(self, orgId:str, site:str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" + siteId + "/devices"
+        rawResponse = await self.get(endpoint)
+        if rawResponse:
+            return safe_model_validate(ApiResponse[List[Site]], rawResponse)
+        return rawResponse   
+
+    async def createRemoteAP(self, orgId:str, siteId: str, device:Device) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" + siteId + "/remote-aps"
+        rawResponse = await self.post(endpoint, device)
+        if rawResponse:
+            return safe_model_validate(ApiResponse[Device], rawResponse)
+        return rawResponse  
+
+    async def getAllDevicesFromOrganization(self, orgId:str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/devices"
+        rawResponse = await self.get(endpoint)
+        if rawResponse: 
+            return safe_model_validate(ApiResponse[List[Site]], rawResponse)
+        return rawResponse        
+
+    async def getDevice(self, orgId:str, deviceId: str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/devices/" + deviceId
+        rawResponse = await self.get(endpoint)
+        if rawResponse: 
+            return safe_model_validate(ApiResponse[DeviceData], rawResponse)
+        return rawResponse               
+
+    async def getDeviceDetails(self, orgId:str, deviceId: str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/devices/" + deviceId + "/details"
+        rawResponse = await self.get(endpoint)
+        if rawResponse: 
+            return safe_model_validate(ApiResponse[Device], rawResponse)
+        return rawResponse   
+
+    async def updateDevice(self, orgId: str, siteId: str, deviceId:str, device:Device) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId + "/devices/" + deviceId
+        rawResponse = await self.put(endpoint, device.model_dump(mode="json"))
+        if rawResponse:
+            return safe_model_validate(ApiResponse[Device], rawResponse)
+        return rawResponse      
+
+    async def deleteDevice(self, orgId: str, siteId: str, deviceId:str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId + "/devices/" + deviceId
+        rawResponse = await self.delete(endpoint)
+        if rawResponse:
+            try:
+                return ApiResponse[Any].model_validate(rawResponse)
+            except:
+                return None
+        return rawResponse  
+
+    async def updateRemoteAP(self, orgId: str, siteId: str, deviceId:str, device:Device) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites/" siteId + "/remote-aps/" + deviceId
+        rawResponse = await self.put(endpoint, device.model_dump(mode="json"))
+        if rawResponse:
+            return safe_model_validate(ApiResponse[Device], rawResponse)
+        return rawResponse                                        
         
     async def close(self):
         await self.client.aclose()
