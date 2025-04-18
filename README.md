@@ -127,7 +127,7 @@ Device API
 
 SSID API
 - getAllSsids
-
+- createSSID
 
 
 ---
