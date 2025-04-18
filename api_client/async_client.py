@@ -148,7 +148,14 @@ class OVCirrusApiClient:
         rawResponse = await self.post(endpoint, site)
         if rawResponse:
             return safe_model_validate(ApiResponse[Site], rawResponse)
-        return rawResponse                  
+        return rawResponse      
+
+    async def getOrganizationSites(self, orgId:str) -> Optional[Any]:
+        endpoint = "api/ov/v1/organizations/" + orgId + "/sites"
+        rawResponse = await self.get(endpoint)
+        if rawResponse:
+            return safe_model_validate(ApiResponse[List[Site]], rawResponse)
+        return rawResponse                       
         
     async def close(self):
         await self.client.aclose()
