@@ -1,10 +1,8 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, TypeVar, Generic, Union, List  # Make sure to import the correct types
 from datetime import datetime
 
-from typing import Optional, List
-from pydantic import BaseModel, Field
-from datetime import datetime
+T = TypeVar("T")
 
 class RfProfileDefault(BaseModel):
     id: Optional[int]
@@ -240,3 +238,20 @@ class Organization(BaseModel):
     qoe: Optional[int] = 0
     enforceStrongPassword: Optional[bool] = False
     enforceStrongPasswordNotifyType: Optional[str] = "SHOW_MESSAGE_AFTER_LOGIN"
+
+
+class Error(BaseModel):
+    type: Optional[str] = None
+    field: Optional[str] = None
+    errorMsg: Optional[str] = None 
+
+
+class OrganizationResponse(BaseModel, Generic[T]):  # Inherit directly from BaseModel
+    status: Optional[int] = None
+    message: Optional[str] = None
+    data: Optional[T] = None
+    errorCode: Optional[int] = None
+    errorMsg: Optional[str] = None
+    errorDetailsCode: Optional[str] = None
+    errorDetails: Optional[Union[str, dict]] = None  # Accept both str and dict
+    errors: Optional[List[Error]] = None

@@ -1,6 +1,7 @@
 import pytest
 import httpx
 from httpx import Request, Response
+from unittest.mock import AsyncMock
 from api_client.async_client import OVCirrusApiClient
 from models.user import UserResponse, UserProfile
 from models.generic import ApiResponse
@@ -118,6 +119,30 @@ async def test_update_user_profile_retry_on_401():
     assert result.data.firstname == "Retry Guy"
 
     await client.close()
+
+
+@pytest.mark.asyncio
+async def test_update_user_profile_invalid_header():
+    # Create an example organization instance
+    user_profile = UserProfile(firstname="Retry Guy", email="retry@example.com")
+    mock_response = {
+        "errorCode": 406,
+        "errorMsg": "The 'Content-Type' header is missing or invalid. You should use 'Content-Type: application/json'.",
+        "errorDetailsCode": "invalid_header"
+    }
+    
+    client = OVCirrusApiClient(base_url="http://mock.api", auth=AsyncMock())
+
+    client.put = AsyncMock(return_value=mock_response)
+
+    result = await client.updateUserProfile(user_profile)
+
+    assert result is not None
+    assert isinstance(result, UserResponse)
+    assert result.errorCode == 406
+    assert result.errorMsg == "The 'Content-Type' header is missing or invalid. You should use 'Content-Type: application/json'."
+    assert result.errorDetailsCode == "invalid_header"
+
 
 @pytest.mark.asyncio
 async def test_update_user_profile_malformed_response(caplog):
