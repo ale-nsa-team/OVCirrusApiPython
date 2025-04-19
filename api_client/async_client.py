@@ -8,7 +8,7 @@ import backoff
 from .auth import Authenticator
 from models.generic import ApiResponse
 from models.user import UserProfile, UserResponse
-from models.organization import Organization
+from models.organization import OrganizationResponse, Organization
 from models.site import Site
 from models.device import Device, SaveToRunningResponse, RebootResponse
 from models.ssid import SSID, SSIDData, SSIDResponse
@@ -107,7 +107,7 @@ class OVCirrusApiClient:
         endpoint = "api/ov/v1/organizations"
         rawResponse = await self.post(endpoint, organization)
         if rawResponse:
-            return safe_model_validate(ApiResponse[Organization], rawResponse)
+            return safe_model_validate(OrganizationResponse[Organization], rawResponse)
         return rawResponse          
 
     async def getAllUserOrganizations(self) -> Optional[Any]:
