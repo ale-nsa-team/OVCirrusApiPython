@@ -1,6 +1,7 @@
-from typing import List, Optional, Dict, Any
+from typing import Optional, TypeVar, Generic, Union, List, Dict, Any  # Make sure to import the correct types
 from pydantic import BaseModel
 
+T = TypeVar("T")
 
 class CaptivePortal(BaseModel):
     captivePortalType: Optional[str] = "NONE"
@@ -195,8 +196,17 @@ class SSIDData(BaseModel):
     ssid: Optional[SSID] = SSID()
     assignments: Optional[List[Assignment]] = []
 
+class Error(BaseModel):
+    type: Optional[str] = None
+    field: Optional[str] = None
+    errorMsg: Optional[str] = None 
 
-class SSIDResponse(BaseModel):
-    status: Optional[int] = 200
-    message: Optional[str] = "SSID has been successfully fetched."
-    data: Optional[SSIDData] = SSIDData()
+class SSIDResponse(BaseModel, Generic[T]):  # Inherit directly from BaseModel
+    status: Optional[int] = None
+    message: Optional[str] = None
+    data: Optional[SSIDData] = None
+    errorCode: Optional[int] = None
+    errorMsg: Optional[str] = None
+    errorDetailsCode: Optional[str] = None
+    errorDetails: Optional[Union[str, dict]] = None  # Accept both str and dict
+    errors: Optional[List[Error]] = None
