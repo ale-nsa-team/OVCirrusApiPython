@@ -2,7 +2,7 @@ import pytest
 import httpx
 from httpx import Request, Response
 from api_client.async_client import OVCirrusApiClient
-from models.user import UserProfile
+from models.user import UserResponse, UserProfile
 from models.generic import ApiResponse
 from api_client.auth import Authenticator
 
@@ -15,7 +15,6 @@ class DummyAuthenticator(Authenticator):
 @pytest.mark.asyncio
 async def test_update_user_profile_success():
     user_profile = UserProfile(firstname="John Doe", email="john@example.com")
-
     mock_response_data = {
         "status": 200,
         "message": "Success",
@@ -32,7 +31,9 @@ async def test_update_user_profile_success():
     result = await client.updateUserProfile(user_profile)
 
     assert result is not None
+    assert isinstance(result, UserResponse)
     assert result.status == 200
+    assert isinstance(result.data, UserProfile)
     assert result.data.firstname == "John Doe"
 
     await client.close()
@@ -43,8 +44,16 @@ async def test_update_user_profile_invalid_data():
 
     mock_response_data = {
         "status": 400,
-        "message": "Invalid data",
-        "data": None
+        "message": "Bad Request",
+        "errors": [ 
+                {
+
+                    "type": "any.required",
+                    "field": "Lastname",
+                    "errorMsg": "Lastname is required"
+
+                }
+        ]
     }
 
     async def mock_send(request: Request) -> Response:
@@ -56,8 +65,10 @@ async def test_update_user_profile_invalid_data():
 
     result = await client.updateUserProfile(user_profile)
 
+    assert isinstance(result, UserResponse)
     assert result.status == 400
-    assert result.message == "Invalid data"
+    assert result.message == "Bad Request"
+    assert result.errors[0].errorMsg == "Lastname is required"
 
     await client.close()
 

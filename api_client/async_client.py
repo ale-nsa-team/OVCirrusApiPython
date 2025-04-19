@@ -7,13 +7,11 @@ import httpx
 import backoff
 from .auth import Authenticator
 from models.generic import ApiResponse
-from models.user import UserProfile
+from models.user import UserProfile, UserResponse
 from models.organization import Organization
 from models.site import Site
 from models.device import Device, SaveToRunningResponse, RebootResponse
 from models.ssid import SSID, SSIDData, SSIDResponse
-
-
 
 from utilities.model_validator import safe_model_validate
 
@@ -96,13 +94,13 @@ class OVCirrusApiClient:
     async def getUserProfile(self) -> Optional[Any]:
         endpoint = "api/ov/v1/user/profile"
         rawResponse = await self.get(endpoint)
-        return safe_model_validate(ApiResponse[UserProfile], rawResponse)
+        return safe_model_validate(UserResponse[UserProfile], rawResponse)
 
     async def updateUserProfile(self, userProfile: UserProfile) -> Optional[Any]:
         endpoint = "api/ov/v1/user/profile"
         rawResponse = await self.put(endpoint, userProfile.model_dump(mode="json"))
         if rawResponse:
-            return safe_model_validate(ApiResponse[UserProfile], rawResponse)
+            return safe_model_validate(UserResponse[UserProfile], rawResponse)
         return rawResponse
 
     async def createAnOrganization(self, organization: Organization) -> Optional[Any]:
