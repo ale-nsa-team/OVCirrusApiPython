@@ -1,7 +1,8 @@
-from typing import List, Optional, Union
+from typing import Optional, TypeVar, Generic, Union, List  # Make sure to import the correct types
 from pydantic import BaseModel, Field
 from datetime import datetime
 
+T = TypeVar("T")
 
 class Coordinates(BaseModel):
     type: Optional[str] = Field(default=None)
@@ -54,3 +55,18 @@ class Site(BaseModel):
     zoom: Optional[int] = Field(default=18)
     organization: Optional[str] = Field(default=None)
     buildings: Optional[List[Building]] = Field(default_factory=list)
+
+class Error(BaseModel):
+    type: Optional[str] = None
+    field: Optional[str] = None
+    errorMsg: Optional[str] = None 
+
+class SiteResponse(BaseModel, Generic[T]):  # Inherit directly from BaseModel
+    status: Optional[int] = None
+    message: Optional[str] = None
+    data: Optional[T] = None
+    errorCode: Optional[int] = None
+    errorMsg: Optional[str] = None
+    errorDetailsCode: Optional[str] = None
+    errorDetails: Optional[Union[str, dict]] = None  # Accept both str and dict
+    errors: Optional[List[Error]] = None    

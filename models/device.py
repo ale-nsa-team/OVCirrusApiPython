@@ -1,7 +1,8 @@
 from pydantic import BaseModel, Field
-from typing import Optional, List, Union
+from typing import Optional, TypeVar, Generic, Union, List  # Make sure to import the correct types
 from datetime import datetime
 
+T = TypeVar("T")
 
 class DeviceLabel(BaseModel):
     createdAt: Optional[datetime] = None
@@ -414,4 +415,21 @@ class SaveToRunningResponse(BaseModel):
     macAddresses: Optional[List[str]] = []
 
 class RebootResponse(BaseModel):
-    macAddresses: Optional[List[str]] = []    
+    macAddresses: Optional[List[str]] = []  
+
+
+class Error(BaseModel):
+    type: Optional[str] = None
+    field: Optional[str] = None
+    errorMsg: Optional[str] = None 
+
+
+class DeviceResponse(BaseModel, Generic[T]):  # Inherit directly from BaseModel
+    status: Optional[int] = None
+    message: Optional[str] = None
+    data: Optional[T] = None
+    errorCode: Optional[int] = None
+    errorMsg: Optional[str] = None
+    errorDetailsCode: Optional[str] = None
+    errorDetails: Optional[Union[str, dict]] = None  # Accept both str and dict
+    errors: Optional[List[Error]] = None      
