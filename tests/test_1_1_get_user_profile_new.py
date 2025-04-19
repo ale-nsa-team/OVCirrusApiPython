@@ -29,7 +29,6 @@ async def test_get_user_profile_success():
             "id": "12345"
         }
     }
-    client.get = AsyncMock(return_value=mock_response)
 
     with patch.object(BaseClient, 'get', AsyncMock(return_value=mock_response)):
         result = await client.user.getUserProfile()
@@ -52,7 +51,6 @@ async def test_get_user_profile_unauthorized():
         "errorDetailsCode": "invalid_token",
         "errorDetails": "The access token provided is expired, revoked, malformed, or invalid for other reasons."
     }
-    client.get = AsyncMock(return_value=mock_response)
 
     with patch.object(BaseClient, 'get', AsyncMock(return_value=mock_response)):
         result = await client.user.getUserProfile()
@@ -72,7 +70,6 @@ async def test_get_user_profile_server_error():
         "errorMsg": "Server Error",
         "errorDetails": {}
     }
-    client.get = AsyncMock(return_value=mock_response)
 
     with patch.object(BaseClient, 'get', AsyncMock(return_value=mock_response)):
         result = await client.user.getUserProfile()
@@ -103,7 +100,6 @@ async def test_get_user_profile_missing_fields():
         "message": "success",
         "data": {}  # Missing required fields in UserProfile
     }
-    client.get = AsyncMock(return_value=mock_response)
 
     with patch.object(BaseClient, 'get', AsyncMock(return_value=mock_response)):
         result = await client.user.getUserProfile()
