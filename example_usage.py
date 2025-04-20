@@ -19,15 +19,18 @@ async def main():
         .build()
     )
 
-    print("Token: " + auth.get_token())
+    if(auth.get_token()):
+        print("Authenticated successful!")
 
     client = OVCirrusApiClient(base_url=API_BASE_URL, auth=auth)
     
-# Get current user profile
-    current_profile_resp = await client.getUserProfile()
-    if current_profile_resp is None:
-        print("Failed to retrieve profile.")
-        return
+    # Get current user profile
+    current_profile_resp = await client.user.getUserProfile()
+    if current_profile_resp:
+        print("Name:" + " ".join([current_profile_resp.data.firstname,current_profile_resp.data.lastname]))
+    else:
+        print("Failed to get user profile")
+    
 
     user_profile: UserProfile = current_profile_resp.data
 
@@ -35,16 +38,12 @@ async def main():
     user_profile.firstname = "Samuel"
 
     # Call update method
-    updated_resp = await client.updateUserProfile(user_profile)
+    updated_resp = await client.user.updateUserProfile(user_profile)
 
     if updated_resp:
-        print("Update successful!")
-        print("Updated name:", updated_resp.data.firstname)
+        print("Changed Name to:" + " ".join([updated_resp.data.firstname,updated_resp.data.lastname]))
     else:
         print("Update failed.")
-
-    await client.close()
-
 
     await client.close()
 
