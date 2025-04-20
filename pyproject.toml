@@ -1,6 +1,6 @@
 [project]
 name = "ovcirrus_api"
-version = "10.4.3post5"
+version = "10.4.3post6"
 description = "OmniVista Cirrus RestFul API library for Python"
 authors = [{ name = "Samuel Yip", email = "kahyean.yip@gmail.com" }]
 readme = "README.md"
@@ -19,4 +19,4 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["api_client", "models"]
+include = ["api_client", "models", "utilities"]
