@@ -31,3 +31,5 @@ tests/test_2_5_update_an_organization_new.py
 tests/test_2_6_delete_organization_new.py
 tests/test_3_1_create_site_new.py
 tests/test_3_2_get_organization_sites_new.py
+utilities/__init__.py
+utilities/model_validator.py

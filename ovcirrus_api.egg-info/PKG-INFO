@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: ovcirrus_api
-Version: 10.4.3.post5
+Version: 10.4.3.post6
 Summary: OmniVista Cirrus RestFul API library for Python
 Author-email: Samuel Yip <kahyean.yip@gmail.com>
 Requires-Python: >=3.8
@@ -153,7 +153,9 @@ SSID API
 | v10.4.3post2     | 2025-04-16 | Initial release             |
 | v10.4.3post3     | 2025-04-18 | Site API added              |
 | v10.4.3post4     | 2025-04-18 | Device API added            |
-| v10.4.3post5     | 2025-04-18 | SSID API added              |
+| v10.4.3post5     | 2025-04-18 | Organization API added      |
+| v10.4.3post6     | 2025-04-18 | SSID API added              |
+
 
 
 
