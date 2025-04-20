@@ -5,7 +5,6 @@ from unittest.mock import AsyncMock, patch
 from api_client.base import BaseClient
 from api_client.ovcapi_client import OVCirrusApiClient
 from models.user import UserResponse, UserProfile
-from models.generic import ApiResponse
 from api_client.auth import Authenticator
 
 class DummyAuthenticator(Authenticator):
