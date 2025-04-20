@@ -1,4 +1,5 @@
 import asyncio
+from pprint import pprint
 from api_client import OVCirrusApiClient, Authenticator
 
 # Configuration (replace with real values or load from .env)
@@ -9,6 +10,11 @@ EMAIL = "kahyean.yip@gmail.com"
 PASSWORD = "Ciscotac%2688"
 APP_ID = "671f13d3e0748137d6fc5a27"
 APP_SECRET = "db0553664df3a0c7f86986619748096dab6d1b58a91f1be9dffd093e50426280"
+
+orgId = "632a9823803a31ad755226ee"
+siteId = "633256c72f0723ac44277f3b"
+deviceId = "6602790a979e77043c367e5d"
+    
 
 async def main():
     auth = (
@@ -38,12 +44,37 @@ async def main():
     user_profile.firstname = "Samuel"
 
     # Call update method
-    updated_resp = await client.user.updateUserProfile(user_profile)
+    response = await client.user.updateUserProfile(user_profile)
 
-    if updated_resp:
-        print("Changed Name to:" + " ".join([updated_resp.data.firstname,updated_resp.data.lastname]))
+    if response:
+        print("Changed Name to:" + " ".join([response.data.firstname,response.data.lastname]))
     else:
         print("Update failed.")
+
+
+    # Call method
+    response = await client.organization.getOrganization(orgId)
+    if response:
+        print("Print Organization !")
+        pprint(vars(response.data))
+    else:
+        print("Failed.")
+
+    # Call method
+    response = await client.site.getSite(orgId, siteId)
+    if response:
+        print("Print Site !")
+        pprint(vars(response.data))
+    else:
+        print("Failed.")        
+            
+    # Call method
+    response = await client.device.getDevice(orgId, deviceId)
+    if response:
+        print("Print device !")
+        pprint(vars(response.data))
+    else:
+        print("Failed.")      
 
     await client.close()
 

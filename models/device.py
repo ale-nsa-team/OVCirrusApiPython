@@ -162,10 +162,10 @@ class Device(BaseModel):
     ipv6DeviceDNS: Optional[str] = None
     ledMode: Optional[str] = None
     lacpStatus: Optional[str] = None
-    switchForQoeRtls: Optional[str] = None
-    qoeSwitch: Optional[str] = None
-    rtlsSwitch: Optional[str] = None
-    flashThreshold: Optional[int] = None
+    # switchForQoeRtls: Optional[str] = None
+    # qoeSwitch: Optional[str] = None
+    # rtlsSwitch: Optional[str] = None
+    # flashThreshold: Optional[int] = None
     memoryThreshold: Optional[int] = None
     cpuThreshold: Optional[int] = None
     bleMac: Optional[str] = None
@@ -258,157 +258,157 @@ class Device(BaseModel):
 
 
 class DeviceData(BaseModel):
-    deviceLabels: Optional[List[DeviceLabel]] = []
-    createdAt: Optional[str]
-    updatedAt: Optional[str]
-    id: Optional[str]
-    name: Optional[str]
-    ipAddress: Optional[str]
-    ipAddressV6: Optional[str]
-    friendlyName: Optional[str]
-    macAddress: Optional[str]
-    serialNumber: Optional[str]
-    deviceFamily: Optional[str]
+    deviceLabels: Optional[List[DeviceLabel]] = None
+    createdAt: Optional[datetime] = None
+    updatedAt: Optional[datetime] = None
+    id: Optional[str] = None
+    name: Optional[str] = None
+    ipAddress: Optional[str] = None
+    ipAddressV6: Optional[str] = None
+    friendlyName: Optional[str] = None
+    macAddress: Optional[str] = None
+    serialNumber: Optional[str] = None
+    deviceFamily: Optional[str] = None
     type: Optional[str] = ""
     physicalLocation: Optional[str] = ""
     description: Optional[str] = ""
-    systemContact: Optional[str]
-    location: Optional[str]
+    systemContact: Optional[str] = None
+    location: Optional[str] = None
     floorElevation: Optional[int] = 0
-    deviceStatus: Optional[str]
-    currentSwVer: Optional[str]
-    workingMode: Optional[str]
-    lastSeenTime: Optional[int]
+    deviceStatus: Optional[str] = None
+    currentSwVer: Optional[str] = None
+    workingMode: Optional[str] = None
+    lastSeenTime: Optional[int] = None
     imageLocation: Optional[str] = ""
-    licenseStatus: Optional[str]
-    autoChoosingLicenseMode: Optional[str]
-    markPremium: Optional[bool] = True
-    managementMode: Optional[str]
+    licenseStatus: Optional[str] = None
+    autoChoosingLicenseMode: Optional[str] = None
+    markPremium: Optional[bool] = None
+    managementMode: Optional[str] = None
     isRap: Optional[bool] = False
-    vpnSettingName: Optional[str]
+    vpnSettingName: Optional[str] = None
     isAutoRegistered: Optional[bool] = False
     vcSerialNumber: Optional[str] = ""
-    calculatedMacAddress: Optional[str]
-    organization: Optional[str]
-    site: Optional[str]
-    group: Optional[str]
-    building: Optional[str]
-    floor: Optional[str]
-    license: Optional[License]
-    iotStatus: Optional[str]
-    ipMode: Optional[str]
+    calculatedMacAddress: Optional[str] = None
+    organization: Optional[str] = None
+    site: Optional[str] = None
+    group: Optional[str] = None
+    building: Optional[str] = None
+    floor: Optional[str] = None
+    license: Optional[License] = None
+    iotStatus: Optional[str] = None
+    ipMode: Optional[str] = None
     meshEnable: Optional[bool] = False
     meshRole: Optional[str] = ""
     meshIsRoot: Optional[bool] = False
     meshBand: Optional[str] = ""
     meshEssid: Optional[str] = ""
-    meshPassphrase: Optional[str]
-    ipv4Netmask: Optional[str]
-    ipv4Gateway: Optional[str]
-    ipv4DeviceDNS: Optional[str]
+    meshPassphrase: Optional[str] = None
+    ipv4Netmask: Optional[str] = None
+    ipv4Gateway: Optional[str] = None
+    ipv4DeviceDNS: Optional[str] = None
     ipv6Prefixlen: Optional[str] = ""
-    ipv6Gateway: Optional[str]
-    ipv6DeviceDNS: Optional[str]
-    ledMode: Optional[str]
-    lacpStatus: Optional[str]
-    switchForQoeRtls: Optional[str]
-    qoeSwitch: Optional[str]
-    rtlsSwitch: Optional[str]
-    flashThreshold: Optional[str]
-    memoryThreshold: Optional[str]
-    cpuThreshold: Optional[str]
-    bleMac: Optional[str]
+    ipv6Gateway: Optional[str] = None
+    ipv6DeviceDNS: Optional[str] = None
+    ledMode: Optional[str] = None
+    lacpStatus: Optional[str] = None
+    # switchForQoeRtls: Optional[str] = None
+    # qoeSwitch: Optional[str] = None
+    # rtlsSwitch: Optional[str] = None
+    # flashThreshold: Optional[str] = None
+    memoryThreshold: Optional[str] = None
+    cpuThreshold: Optional[str] = None
+    bleMac: Optional[str] = None
     iotPrivateSwitch: Optional[bool] = False
-    iotMode: Optional[str]
+    iotMode: Optional[str] = None
     advertisingSwitch: Optional[bool] = False
-    frequency: Optional[int] = 200
-    txPower: Optional[int] = 4
-    txChannel: Optional[List[int]] = []
-    beaconMode: Optional[str]
+    frequency: Optional[int] = None
+    txPower: Optional[int] = None
+    txChannel: Optional[List[int]] = None
+    beaconMode: Optional[str] = None
     plainUrl: Optional[str] = ""
-    nameSpace: Optional[str]
-    instanceId: Optional[str]
+    nameSpace: Optional[str] = None
+    instanceId: Optional[str] = None
     scanningSwitch: Optional[bool] = False
-    scanningInterval: Optional[int] = 100
-    ouiWhiteList: Optional[List[str]] = []
-    deviceCountryCode: Optional[str]
-    apRadioConfigSwitch: Optional[str]
-    band2: Optional[str]
-    band5A: Optional[str]
-    band5H: Optional[str]
-    band5L: Optional[str]
-    band6: Optional[str]
-    _modifiedTS: Optional[str]
-    callHomeInterval: Optional[int]
-    chassisInfo: Optional[str]
-    currentRunningDirectory: Optional[str]
-    dataVpnServerIP: Optional[str]
-    deviceFeatures: Optional[str]
+    scanningInterval: Optional[int] = None
+    ouiWhiteList: Optional[List[str]] = None
+    deviceCountryCode: Optional[str] = None
+    apRadioConfigSwitch: Optional[str] = None
+    band2: Optional[str] = None
+    band5A: Optional[str] = None
+    band5H: Optional[str] = None
+    band5L: Optional[str] = None
+    band6: Optional[str] = None
+    _modifiedTS: Optional[datetime] = None
+    callHomeInterval: Optional[int] = None
+    chassisInfo: Optional[str] = None
+    currentRunningDirectory: Optional[str] = None
+    dataVpnServerIP: Optional[str] = None
+    deviceFeatures: Optional[str] = None
     deviceLicenseMode: Optional[str] = ""
-    deviceNaasMode: Optional[str]
-    devicePrivateKey: Optional[str]
-    devicePublicKey: Optional[str]
-    deviceRole: Optional[str]
-    deviceVpnIP: Optional[str]
-    endIpAddress: Optional[str]
-    ipAddressPoolOption: Optional[str]
-    lengthIpAddress: Optional[str]
-    manageRapVpnServer: Optional[str]
+    deviceNaasMode: Optional[str] = None
+    devicePrivateKey: Optional[str] = None
+    devicePublicKey: Optional[str] = None
+    deviceRole: Optional[str] = None
+    deviceVpnIP: Optional[str] = None
+    endIpAddress: Optional[str] = None
+    ipAddressPoolOption: Optional[str] = None
+    lengthIpAddress: Optional[str] = None
+    manageRapVpnServer: Optional[str] = None
     manageRapVpnServerPort: Optional[int] = 0
-    manageRapVpnServerPrivateKey: Optional[str]
-    manageRapVpnServerPublicKey: Optional[str]
-    networkIpAddress: Optional[str]
-    ovEnterpriseServerIP: Optional[str]
-    partNumber: Optional[str]
-    pkiUpdateStatus: Optional[str]
-    pkiUpdateTimestamp: Optional[str]
+    manageRapVpnServerPrivateKey: Optional[str] = None
+    manageRapVpnServerPublicKey: Optional[str] = None
+    networkIpAddress: Optional[str] = None
+    ovEnterpriseServerIP: Optional[str] = None
+    partNumber: Optional[str] = None
+    pkiUpdateStatus: Optional[str] = None
+    pkiUpdateTimestamp: Optional[str] = None
     rap: Optional[bool] = False
-    startIpAddress: Optional[str]
-    subnetMask: Optional[str]
-    tcpMss: Optional[int]
+    startIpAddress: Optional[str] = None
+    subnetMask: Optional[str] = None
+    tcpMss: Optional[str] = None
     vcMacAddress: Optional[str] = ""
-    upTime: Optional[int]
-    bridgeApWebPassword: Optional[str]
-    bridgeApWebSwitch: Optional[str]
-    bridgeDefault: Optional[str]
-    bridgeFarEndApIp: Optional[str]
-    bridgeFarEndApMac: Optional[str]
-    bridgeSshPassword: Optional[str]
-    bridgeSshSwitch: Optional[str]
-    bridgeWebCertName: Optional[str]
-    lastRegisterEpochSecondTime: Optional[int]
-    meshMode: Optional[str]
+    upTime: Optional[int] = None
+    bridgeApWebPassword: Optional[str] = None
+    bridgeApWebSwitch: Optional[str] = None
+    bridgeDefault: Optional[str] = None
+    bridgeFarEndApIp: Optional[str] = None
+    bridgeFarEndApMac: Optional[str] = None
+    bridgeSshPassword: Optional[str] = None
+    bridgeSshSwitch: Optional[str] = None
+    bridgeWebCertName: Optional[str] = None
+    lastRegisterEpochSecondTime: Optional[int] = None
+    meshMode: Optional[str] = None
     meshParentNode: Optional[str] = ""
-    channel: Optional[int]
-    linkStatus: Optional[str]
-    registrationStatus: Optional[str]
-    registrationStatusReason: Optional[str]
-    version: Optional[str]
-    changes: Optional[str]
-    apName: Optional[str]
-    encryptionType: Optional[str]
-    meshMcastRate: Optional[str]
-    _insertedTS: Optional[str]
-    activationStatus: Optional[str]
-    currentRunningSoftwareVersion: Optional[str]
-    lldpSwitch: Optional[bool] = True
-    lastHeartBeat: Optional[int]
-    modelName: Optional[str]
-    licenseCategory: Optional[str]
-    deviceLocation: Optional[str]
-    workMode: Optional[str]
-    lastEventReceivedAt: Optional[int]
-    managementConnectivity: Optional[str]
-    provisioningTemplate: Optional[str]
-    valueMappingTemplate: Optional[str]
-    mgmtUsersTemplate: Optional[str]
-    saveAndCertify: Optional[bool] = True
-    provisioningResultState: Optional[str]
-    rfProfile: Optional[str]
-    upgradeSchedule: Optional[UpgradeSchedule]
-    desiredSwVersion: Optional[str]
-    scheduleLevel: Optional[str]
-    rootMacFriendlyName: Optional[str]    
+    channel: Optional[int] = None
+    linkStatus: Optional[str] = None
+    registrationStatus: Optional[str] = None
+    registrationStatusReason: Optional[str] = None
+    version: Optional[str] = None
+    changes: Optional[str] = None
+    apName: Optional[str] = None
+    encryptionType: Optional[str] = None
+    meshMcastRate: Optional[str] = None
+    _insertedTS: Optional[datetime] = None
+    activationStatus: Optional[str] = None
+    currentRunningSoftwareVersion: Optional[str] = None
+    lldpSwitch: Optional[bool] = None
+    lastHeartBeat: Optional[int] = None
+    modelName: Optional[str] = None
+    licenseCategory: Optional[str] = None
+    deviceLocation: Optional[str] = None
+    workMode: Optional[str] = None
+    lastEventReceivedAt: Optional[int] = None
+    managementConnectivity: Optional[str] = None
+    provisioningTemplate: Optional[str] = None
+    valueMappingTemplate: Optional[str] = None
+    mgmtUsersTemplate: Optional[str] = None
+    saveAndCertify: Optional[bool] = None
+    provisioningResultState: Optional[str] = None
+    rfProfile: Optional[str] = None
+    upgradeSchedule: Optional[UpgradeSchedule] = None
+    desiredSwVersion: Optional[str] = None
+    scheduleLevel: Optional[str] = None
+    rootMacFriendlyName: Optional[str] = None
    
 class SaveToRunningResponse(BaseModel):
     devicesIds: Optional[List[str]] = []
