@@ -40,12 +40,12 @@ The full API documentation is available at: [OmniVista Cirrus API Docs](https://
 
 ## 📦 Usage Guide
 
-### Step 1: Create a global instance
+### Step 1: Create a global instance of Authenticator object in auth_instance.py
 
 
 ```python
     # auth_instance.py
-    from api_client.auth import Authenticator
+    from api_client import Authenticator
     auth = (
         Authenticator()
         .setURL("https://api.example.com/auth")
@@ -55,14 +55,15 @@ The full API documentation is available at: [OmniVista Cirrus API Docs](https://
     )
 ```
 
-### Step 2: Import the instance and use the apiClient in the .py file
+### Step 2: Import the auth instance and apiClient library in your .py application
 
 ```python
 
-    from auth_instance import auth
+    from auth_instance import auth  # auth_instance.py
+    from api_client import OVCirrusApiClient
     
     apiClient = OVCirrusApiClient(base_url=API_BASE_URL, auth=auth)
-    userProfile = await apiClient.getUserProfile()
+    userProfile = await apiClient.user.getUserProfile()
     if userProfile is None:
         print("Failed to retrieve profile.")
         return
@@ -86,7 +87,7 @@ APP_ID = "<appId>"
 APP_SECRET = "<appSecret>"
 ```
 
-2. Run the script, python example_usage.py
+2. Run the script, python .\example_usage.py
 
 ---
 
@@ -150,7 +151,7 @@ Visit the [Releases](https://github.com/Samuelyip74/OVCirrusApiPython/releases/t
 ## 📄 License
 
 ```
-Copyright (c) Samuel Yip Kah Yean 2025
+Copyright (c) Samuel Yip Kah Yean <2025>
 
 This software is licensed for personal, non-commercial use only.
 
