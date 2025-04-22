@@ -15,7 +15,6 @@ orgId = "632a9823803a31ad755226ee"
 siteId = "633256c72f0723ac44277f3b"
 deviceId = "6602790a979e77043c367e5d"
     
-
 async def main():
     auth = (
         Authenticator()
@@ -30,52 +29,61 @@ async def main():
 
     client = OVCirrusApiClient(base_url=API_BASE_URL, auth=auth)
     
-    # Get current user profile
-    current_profile_resp = await client.user.getUserProfile()
-    if current_profile_resp:
-        print("Name:" + " ".join([current_profile_resp.data.firstname,current_profile_resp.data.lastname]))
-    else:
-        print("Failed to get user profile")
+    # # Get current user profile
+    # current_profile_resp = await client.user.getUserProfile()
+    # if current_profile_resp:
+    #     print("Name:" + " ".join([current_profile_resp.data.firstname,current_profile_resp.data.lastname]))
+    # else:
+    #     print("Failed to get user profile")
     
+    # user_profile: UserProfile = current_profile_resp.data
 
-    user_profile: UserProfile = current_profile_resp.data
+    # # Modify a field (e.g., change firstname)
+    # user_profile.firstname = "Samuel"
 
-    # Modify a field (e.g., change firstname)
-    user_profile.firstname = "Samuel"
+    # # Update name method
+    # response = await client.user.updateUserProfile(user_profile)
 
-    # Call update method
-    response = await client.user.updateUserProfile(user_profile)
+    # if response:
+    #     print("Changed Name to:" + " ".join([response.data.firstname,response.data.lastname]))
+    # else:
+    #     print("Update failed.")
 
-    if response:
-        print("Changed Name to:" + " ".join([response.data.firstname,response.data.lastname]))
-    else:
-        print("Update failed.")
+    # # Get Organization method
+    # response = await client.organization.getOrganization(orgId)
+    # if response:
+    #     print("Print Organization !")
+    #     pprint(vars(response.data))
+    # else:
+    #     print("Failed.")
 
-
-    # Call method
-    response = await client.organization.getOrganization(orgId)
-    if response:
-        print("Print Organization !")
-        pprint(vars(response.data))
-    else:
-        print("Failed.")
-
-    # Call method
-    response = await client.site.getSite(orgId, siteId)
-    if response:
-        print("Print Site !")
-        pprint(vars(response.data))
-    else:
-        print("Failed.")        
+    # # Get Site method
+    # response = await client.site.getSite(orgId, siteId)
+    # if response:
+    #     print("Print Site !")
+    #     pprint(vars(response.data))
+    # else:
+    #     print("Failed.")        
             
-    # Call method
-    response = await client.device.getDevice(orgId, deviceId)
-    if response:
-        print("Print device !")
-        pprint(vars(response.data))
-    else:
-        print("Failed.")      
+    # # Get Device method
+    # response = await client.device.getDevice(orgId, deviceId)
+    # if response:
+    #     print("Print device !")
+    #     pprint(vars(response.data))
+    # else:
+    #     print("Failed.")      
+    
+    # await client.close()
 
-    await client.close()
+    # Get current user profile
+    device_resp = await client.device.getAllDevices("632a9823803a31ad755226ee","633256c72f0723ac44277f3b" )
+    if device_resp:
+        print("Print device !")
+        pprint(vars(device_resp.data[0]))
+    else:
+        print("Failed.")    
+
+    await client.close()        
+    
 
 asyncio.run(main())
