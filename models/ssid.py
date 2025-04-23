@@ -19,14 +19,14 @@ class WalledGarden(BaseModel):
 
 
 class AccessRoleProfile(BaseModel):
-    arpName: Optional[str] = ""
-    bandwidthControl: Optional[Dict[str, Any]] = {}
+    arpName: Optional[str] = None
+    bandwidthControl: Optional[Dict] = {}
     captivePortal: Optional[CaptivePortal] = CaptivePortal()
     childStatus: Optional[bool] = False
-    clientIsolationAllowedList: Optional[List[str]] = []
+    clientIsolationAllowedList: Optional[List] = []
     clientSessionLogging: Optional[ClientSessionLogging] = ClientSessionLogging()
     dhcpOption82Status: Optional[bool] = False
-    id: Optional[int] = 0
+    id: Optional[int] = None
     saveAsDistinct: Optional[bool] = False
     useExistingAclAndQos: Optional[bool] = True
     useExistingLocationPolicy: Optional[bool] = True
@@ -47,7 +47,7 @@ class ClientControls(BaseModel):
     maxClientsPerBand: Optional[int] = 64
 
 
-class FrameControls80211(BaseModel):
+class FrameControls802_11(BaseModel):
     advApName: Optional[bool] = False
 
 
@@ -60,7 +60,16 @@ class Hotspot2(BaseModel):
     hotspot2Status: Optional[bool] = False
 
 
-class RateControls(BaseModel):
+class MinClientDataRateControls(BaseModel):
+    minRate24G: Optional[int] = 1
+    minRate24GStatus: Optional[bool] = False
+    minRate5G: Optional[int] = 6
+    minRate5GStatus: Optional[bool] = False
+    minRate6G: Optional[int] = 6
+    minRate6GStatus: Optional[bool] = False
+
+
+class MinMgmtRateControls(BaseModel):
     minRate24G: Optional[int] = 1
     minRate24GStatus: Optional[bool] = False
     minRate5G: Optional[int] = 6
@@ -73,7 +82,7 @@ class PowerSaveControls(BaseModel):
     dtimInterval: Optional[int] = 1
 
 
-class OptimizationSettings(BaseModel):
+class BroadcastMulticastOptimization(BaseModel):
     broadcastFilterARP: Optional[bool] = False
     broadcastFilterAll: Optional[bool] = False
     broadcastKeyRotation: Optional[bool] = False
@@ -85,25 +94,34 @@ class OptimizationSettings(BaseModel):
     okcStatus: Optional[bool] = False
 
 
-class TrafficMapping(BaseModel):
+class Dot1pMappingCategory(BaseModel):
     downlinks: Optional[List[int]] = []
     uplink: Optional[int] = 0
 
 
 class Dot1pMapping(BaseModel):
-    background: Optional[TrafficMapping] = TrafficMapping()
-    bestEffort: Optional[TrafficMapping] = TrafficMapping()
-    video: Optional[TrafficMapping] = TrafficMapping()
-    voice: Optional[TrafficMapping] = TrafficMapping()
+    background: Optional[Dot1pMappingCategory] = Dot1pMappingCategory()
+    bestEffort: Optional[Dot1pMappingCategory] = Dot1pMappingCategory()
+    video: Optional[Dot1pMappingCategory] = Dot1pMappingCategory()
+    voice: Optional[Dot1pMappingCategory] = Dot1pMappingCategory()
 
 
-class DscpMapping(Dot1pMapping):
+class DscpMappingCategory(BaseModel):
+    downlinks: Optional[List[int]] = []
+    uplink: Optional[int] = 0
+
+
+class DscpMapping(BaseModel):
+    background: Optional[DscpMappingCategory] = DscpMappingCategory()
+    bestEffort: Optional[DscpMappingCategory] = DscpMappingCategory()
+    video: Optional[DscpMappingCategory] = DscpMappingCategory()
+    voice: Optional[DscpMappingCategory] = DscpMappingCategory()
     trustOriginalDSCP: Optional[bool] = False
 
 
-class QoSSetting(BaseModel):
-    bandwidthContract: Optional[Dict[str, Any]] = {}
-    broadcastMulticastOptimization: Optional[OptimizationSettings] = OptimizationSettings()
+class QosSetting(BaseModel):
+    bandwidthContract: Optional[Dict] = {}
+    broadcastMulticastOptimization: Optional[BroadcastMulticastOptimization] = BroadcastMulticastOptimization()
     dot1pMapping: Optional[Dot1pMapping] = Dot1pMapping()
     dot1pMappingEnable: Optional[bool] = True
     dscpMapping: Optional[DscpMapping] = DscpMapping()
@@ -123,7 +141,22 @@ class Security(BaseModel):
     macAuthPassProfileName: Optional[str] = "NONE"
 
 
-class SSID(BaseModel):
+class Group(BaseModel):
+    id: Optional[str] = None
+    name: Optional[str] = None
+
+
+class Site(BaseModel):
+    id: Optional[str] = None
+    name: Optional[str] = None
+
+
+class Assignment(BaseModel):
+    group: Optional[Group] = Group()
+    site: Optional[Site] = Site()
+
+
+class SSIDData(BaseModel):
     accessRoleProfile: Optional[AccessRoleProfile] = AccessRoleProfile()
     allowBand: Optional[str] = "All"
     mlo: Optional[bool] = False
@@ -136,20 +169,20 @@ class SSID(BaseModel):
     dynamicVLAN: Optional[bool] = False
     enableSSID: Optional[bool] = True
     enhancedOpen: Optional[str] = "enable"
-    essid: Optional[str] = ""
-    frameControls802_11: Optional[FrameControls80211] = FrameControls80211()
+    essid: Optional[str] = None
+    frameControls802_11: Optional[FrameControls802_11] = FrameControls802_11()
     guestPortal: Optional[bool] = False
     hideSSID: Optional[bool] = False
     highThroughputControl: Optional[HighThroughputControl] = HighThroughputControl()
     hotspot2: Optional[Hotspot2] = Hotspot2()
-    id: Optional[int] = 0
-    minClientDataRateControls: Optional[RateControls] = RateControls()
-    minMgmtRateControls: Optional[RateControls] = RateControls()
-    name: Optional[str] = ""
+    id: Optional[int] = None
+    minClientDataRateControls: Optional[MinClientDataRateControls] = MinClientDataRateControls()
+    minMgmtRateControls: Optional[MinMgmtRateControls] = MinMgmtRateControls()
+    name: Optional[str] = None
     portalType: Optional[str] = "NO"
     powerSaveControls: Optional[PowerSaveControls] = PowerSaveControls()
     privateGroupPSK: Optional[bool] = False
-    qosSetting: Optional[QoSSetting] = QoSSetting()
+    qosSetting: Optional[QosSetting] = QosSetting()
     replaceGroup: Optional[bool] = False
     roamingControls: Optional[RoamingControls] = RoamingControls()
     security: Optional[Security] = Security()
@@ -159,41 +192,6 @@ class SSID(BaseModel):
     useExistingAccessPolicy: Optional[bool] = False
     useExistingArp: Optional[bool] = True
     wepKeyIndex: Optional[int] = 0
-
-
-class VlanTunnelMapping(BaseModel):
-    mappingType: Optional[str] = "Vlan"
-    useExistingTunnel: Optional[bool] = False
-    vlans: Optional[List[str]] = []
-
-
-class ScheduleConfig(BaseModel):
-    alwaysAvailable: Optional[bool] = True
-
-
-class Site(BaseModel):
-    id: Optional[str] = ""
-    name: Optional[str] = ""
-
-
-class Group(BaseModel):
-    id: Optional[str] = ""
-    name: Optional[str] = ""
-
-
-class Assignment(BaseModel):
-    assignmentType: Optional[str] = "ASSIGN"
-    configType: Optional[str] = "SSID"
-    id: Optional[int] = 0
-    mode: Optional[str] = "DEVICE_GROUP"
-    vlanTunnelMapping: Optional[VlanTunnelMapping] = VlanTunnelMapping()
-    scheduleConfig: Optional[ScheduleConfig] = ScheduleConfig()
-    site: Optional[Site] = Site()
-    group: Optional[Group] = Group()
-
-
-class SSIDData(BaseModel):
-    ssid: Optional[SSID] = SSID()
     assignments: Optional[List[Assignment]] = []
 
 class Error(BaseModel):
@@ -204,7 +202,7 @@ class Error(BaseModel):
 class SSIDResponse(BaseModel, Generic[T]):  # Inherit directly from BaseModel
     status: Optional[int] = None
     message: Optional[str] = None
-    data: Optional[SSIDData] = None
+    data: Optional[T] = None
     errorCode: Optional[int] = None
     errorMsg: Optional[str] = None
     errorDetailsCode: Optional[str] = None

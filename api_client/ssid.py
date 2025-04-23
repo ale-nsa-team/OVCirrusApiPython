@@ -17,7 +17,7 @@ class SSIDClient:
         endpoint = f"api/ov/v1/organizations/{orgId}/wlan/ssids"
         rawResponse = await self.base.get(endpoint)
         if rawResponse: 
-            return safe_model_validate(SSIDResponse, rawResponse)
+            return safe_model_validate(SSIDResponse[List[SSIDData]], rawResponse)
         return rawResponse
 
     async def createSSID(self, orgId: str, siteId: str, ssidData: SSIDData) -> Optional[Any]:
