@@ -20,9 +20,16 @@ class SSIDClient:
             return safe_model_validate(SSIDResponse[List[SSIDData]], rawResponse)
         return rawResponse
 
-    async def createSSID(self, orgId: str, siteId: str, ssidData: SSIDData) -> Optional[Any]:
+    async def createSSID(self, orgId: str, ssidData: SSIDData) -> Optional[Any]:
         endpoint = f"api/ov/v1/organizations/{orgId}/wlan/ssids"
         rawResponse = await self.base.post(endpoint, ssidData)
         if rawResponse:
             return safe_model_validate(SSIDResponse, rawResponse)
         return rawResponse
+
+    async def updateSSID(self, orgId: str, ssidData: SSIDData) -> Optional[Any]:
+        endpoint = f"api/ov/v1/organizations/{orgId}/wlan/ssids"
+        rawResponse = await self.base.put(endpoint, ssidData)
+        if rawResponse:
+            return safe_model_validate(SSIDResponse, rawResponse)
+        return rawResponse        
