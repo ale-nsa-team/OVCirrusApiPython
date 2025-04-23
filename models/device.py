@@ -273,8 +273,8 @@ class DeviceData(BaseModel):
     physicalLocation: Optional[str] = ""
     description: Optional[str] = ""
     systemContact: Optional[str] = None
-    location: Optional[str] = None
-    floorElevation: Optional[int] = 0
+    location: Optional[Union[str,T]] = None
+    floorElevation: Optional[Union[str,T]] = 0
     deviceStatus: Optional[str] = None
     currentSwVer: Optional[str] = None
     workingMode: Optional[str] = None

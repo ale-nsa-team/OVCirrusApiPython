@@ -137,11 +137,15 @@ SSID API
 
 | Version          | Date       | Notes                       |
 |------------------|------------|-----------------------------|
-| v10.4.3post2     | 2025-04-16 | Initial release             |
-| v10.4.3post3     | 2025-04-18 | Site API added              |
-| v10.4.3post4     | 2025-04-18 | Device API added            |
-| v10.4.3post5     | 2025-04-18 | Organization API added      |
-| v10.4.3post6     | 2025-04-18 | SSID API added              |
+| v10.4.3          | 2025-04-16 | Initial release             |
+| v10.4.3post2     | 2025-04-16 | Authentication API          |
+| v10.4.3post3     | 2025-04-18 | Profile API added           |
+| v10.4.3post4     | 2025-04-18 | Organization API added      |
+| v10.4.3post5     | 2025-04-18 | Sites API added             |
+| v10.4.3post6     | 2025-04-18 | Device API added            |
+| v10.4.3post7     | 2025-04-18 | SSID API added              | 
+| v10.4.3post7     | 2025-04-18 | Bugs fixes                  | 
+
 
 
 

@@ -75,13 +75,46 @@ async def main():
     
     # await client.close()
 
+    # # Get current user profile
+    # device_resp = await client.device.getAllDevices("632a9823803a31ad755226ee","633256c72f0723ac44277f3b" )
+    # if device_resp:
+    #     print("Print device !")
+    #     pprint(vars(device_resp.data[0]))
+    # else:
+    #     print("Failed.")    
+
+    # # Get current user profile
+    # device_resp = await client.device.getAllDevicesFromOrganization("632a9823803a31ad755226ee" )
+    # if device_resp:
+    #     print("Print device !")
+    #     pprint(vars(device_resp.data[0]))
+    # else:
+    #     print("Failed.")        
+
+    # # Get current user profile
+    # device_resp = await client.device.getDevice("632a9823803a31ad755226ee", "65fb90da4ace186fdfbad35c" )
+    # if device_resp:
+    #     print("Print device !")
+    #     pprint(vars(device_resp.data))
+    # else:
+    #     print("Failed.")       
+
+    # # Get current user profile
+    # device_resp = await client.device.getDeviceDetails("632a9823803a31ad755226ee", "65fb90da4ace186fdfbad35c" )
+    # if device_resp:
+    #     print("Print device !")
+    #     pprint(vars(device_resp.data))
+    # else:
+    #     print("Failed.")        
+
     # Get current user profile
-    device_resp = await client.device.getAllDevices("632a9823803a31ad755226ee","633256c72f0723ac44277f3b" )
-    if device_resp:
-        print("Print device !")
-        pprint(vars(device_resp.data[0]))
+    ssid_rep = await client.ssid.getAllSsids("632a9823803a31ad755226ee" )
+    if ssid_rep:
+        print("Print SSID !")
+        for ssid in ssid_rep.data:
+            pprint(vars(ssid))
     else:
-        print("Failed.")    
+        print("Failed.")            
 
     await client.close()        
     
