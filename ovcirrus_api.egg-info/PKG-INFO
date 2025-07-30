@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: ovcirrus_api
-Version: 10.4.3.post8
+Version: 10.4.3.post9
 Summary: OmniVista Cirrus RestFul API library for Python
 Author-email: Samuel Yip <kahyean.yip@gmail.com>
 Requires-Python: >=3.8
@@ -58,7 +58,7 @@ The full API documentation is available at: [OmniVista Cirrus API Docs](https://
 
 ```python
     # auth_instance.py
-    from api_client import Authenticator
+    from aos8_api.api_client import Authenticator
     auth = (
         Authenticator()
         .setURL("https://api.example.com/auth")
