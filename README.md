@@ -45,7 +45,7 @@ The full API documentation is available at: [OmniVista Cirrus API Docs](https://
 
 ```python
     # auth_instance.py
-    from api_client import Authenticator
+    from aos8_api.api_client import Authenticator
     auth = (
         Authenticator()
         .setURL("https://api.example.com/auth")
