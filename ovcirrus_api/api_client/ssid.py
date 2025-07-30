@@ -3,8 +3,8 @@
 import logging
 from typing import Optional, List, Any
 
-from models.ssid import SSIDData, SSIDResponse
-from utilities.model_validator import safe_model_validate
+from ovcirrus_api.models.ssid import SSIDData, SSIDResponse
+from ovcirrus_api.utilities.model_validator import safe_model_validate
 
 logger = logging.getLogger(__name__)
 

@@ -3,8 +3,8 @@
 import logging
 from typing import Optional, Any, List
 
-from models.site import Site, SiteResponse
-from utilities.model_validator import safe_model_validate
+from ovcirrus_api.models.site import Site, SiteResponse
+from ovcirrus_api.utilities.model_validator import safe_model_validate
 
 logger = logging.getLogger(__name__)
 

@@ -5,10 +5,10 @@ from typing import Optional, Dict, List, Any, Type
 from datetime import datetime
 import httpx
 import backoff
-from .auth import Authenticator
-from models.authentication import AuthDetailData, AuthData, AuthResponse, AuthHistoryDetail
+from ovcirrus_api.api_client.auth import Authenticator
+from ovcirrus_api.models.authentication import AuthDetailData, AuthData, AuthResponse, AuthHistoryDetail
 
-from utilities.model_validator import safe_model_validate
+from ovcirrus_api.utilities.model_validator import safe_model_validate
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
